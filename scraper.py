@@ -19,10 +19,10 @@ initialUrl = "https://www.facebook.com/IgnacioGomezArboleda"
 
 def scrape(aUrl):
     page = requests.get(aUrl).text
-    soup = BeautifulSoup(page, 'html5lib')
-    similarProfiles = soup.find_all('div', class_="profileFriendsText")
+    soup = BeautifulSoup(page, 'lxml')
+    similarProfiles = soup.find_all('div', class_="profileFriendsText", limit=4)
     for aProfile in reversed(similarProfiles):
-        if aProfile.find_all('a')!=[]:
+        if aProfile.find_all('a', limit=1)!=[]:
             tag = aProfile.find('a')
             newProfile = profile()
             newProfile.name = aProfile.find('a').string
